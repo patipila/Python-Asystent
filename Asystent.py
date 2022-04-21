@@ -8,9 +8,9 @@ from playsound import playsound  # odtwarzanie dzwięków
 import webbrowser  # otwieranie stron
 import wikipedia  # wyszkiwanie haseł na stronie wikipedia
 import pyowm  # pokazywanie pogody
-import sys
 
-owm = pyowm.OWM('f58349d7f89f82766b104bc8b3f318b1')  # API komputera
+
+owm = pyowm.OWM('f58349d7f89f82766b104bc8b3f318b1')  # API
 
 name_file = open("Assistant_name", "r")
 name_assistant = name_file.read()
@@ -47,6 +47,7 @@ def get_audio():
 
     with sr.Microphone() as source:
         print("Listening")  # napis listening przy rozpoczeciu sluchania
+
         playsound(
             'C:/Users/W10Home/PycharmProjects/pythonProject/assistant_on.mp3')  # dzwiek, ktory informuje o poczatku sluchania polecen
         audio = r.listen(source,
@@ -99,52 +100,52 @@ def process_audio():
 
             if 'youtube' in statement:  # po powiedzeniu slowa youtube w zdaniu asystent otworzy w nowej karcie (new=2) strone youtube
                 webbrowser.open("https://www.youtube.com", new=2)
-                speak("youtube is open now")
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                speak("youtube is open now. Happy watching!")
+                break
 
             if 'google' in statement:  # po powiedzeniu slowa google w zdaniu asystent otworzy w nowej karcie (new=2) wyszukiwarke google
                 webbrowser.open("https://www.google.com", new=2)
                 speak("Google is open now")
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                break
 
             if 'gmail' in statement:  # po powiedzeniu slowa gmail w zdaniu asystent otworzy w nowej karcie (new=2) poczte Gmail
                 webbrowser.open("mail.google.com", new=2)
                 speak("Google Mail open now")
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                break
 
             if 'netflix' in statement:  # po powiedzeniu slowa netflix w zdaniu asystent otworzy w nowej karcie (new=2) strone Netflix
                 webbrowser.open("netflix.com", new=2)
-                speak("Netflix open now")
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                speak("Netflix open now. Happy watching!")
+                break
 
             if 'open prime video' in statement:  # po powiedzeniu slow prime vidwo w zdaniu asystent otworzy w nowej karcie (new=2) strone Amazon Prime Video
                 webbrowser.open("primevideo.com", new=2)
-                speak("Amazon Prime Video open now")
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                speak("Amazon Prime Video open now. Happy watching!")
+                break
 
             if 'stackoverflow' in statement:
                 speak('opening stackoverflow')
                 webbrowser.open('stackoverflow.com')
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                break
 
             if 'news' in statement:  # po powiedzeniu slowa news w zdaniu asystent otworzy w nowej karcie (new=2) strone z najnowszymi wiadomosciami z Polski
-                webbrowser.open("https://www.independent.co.uk/topic/poland", new=2)
-                speak('Here are some headlines from the Times of Poland, Happy reading')
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                webbrowser.open("https://www.euronews.com/news/europe/poland", new=2)
+                speak('Here are some headlines from the euronews about Poland. Happy reading!')
+                break
 
             if 'virus' in statement:  # po powiedzeniu slowa corona w zdaniu asystent otworzy w nowej karcie (new=2) strone z informacjami o covid
                 webbrowser.open("https://www.worldometers.info/coronavirus/")
                 speak('Here are the latest covid-19 numbers')
-                time.sleep(10)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                break
 
             if 'time' in statement:  # jezeli w wypowiadanym zdaniu asystent uslyszy slowo time
                 strTime = datetime.datetime.now().strftime("%H:%M:%S")
                 speak(f"the time is {strTime}")  # czas godzina, minuta, sekunda
-                time.sleep(5)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                time.sleep(3)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
 
             if 'date' in statement:  # jezeli asystent przetworzy slowo date powie dzisiejsza date
                 date()
-                time.sleep(5)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
+                time.sleep(3)  # odpowiada za czas oczekiwania na wywołanie uruchomionego asystenta
 
             if 'who are you' in statement or 'what can you do' in statement:  # po pytaniu kim jestes, co robisz (w jezyku angielskim) asystnent odpowie
                 speak(
@@ -191,6 +192,8 @@ def process_audio():
                 visibility = w.visibility_distance  # widocznosc
                 speak(f' The visibility is {visibility} meters')
 
+
+
             if 'wikipedia' in statement:  # jezeli w zdaniu pojawi sie slowo wikipedia
                 if 'open wikipedia' in statement:  # jezeli powie sie w zdaniu open wikipedia
                     webbrowser.open('wikipedia.com')  # otwieranie wikipedii w przeglądarce
@@ -203,19 +206,18 @@ def process_audio():
                         speak("According to wikipedia")  # asystent powie "According to wikipedia"
                         wikipedia_screen(results)
                         speak(results)  # wypowiedziana zostanie definicja, o którą pytaliśmy asystent
+                        break
                     except Exception:
                         speak(
                             'Sorry  could not find any results')  # jeżeli naszej frazy nie ma w wikipedii asystent odpowie, że nie może jej znaleźć
 
             if "goodbye" in statement or "ok bye" in statement or "stop" in statement:
-                speak('Your personal assistant ' + name_assistant + ' is shutting down, Good bye')
+                speak('Your personal assistant ' + name_assistant + ' is shutting down, Goodbye')
                 screen.destroy()
                 break
-    sys.exit(0)  # oznacza czyste wyjście bez żadnych błędów / problemów, program się zamyka
-
-
 # jeżeli w wypowiadanym zdaniu pojawi się jedno ze słów: ok bye, stop, goodbye
 #  asystent powie: Your personal assistant + imię, które mu nadaliśmy + is shutting down, good bye, asystent pożegana się z nami
+
 
 def change_name():  # zmiana imienia naszego asystenta
     name_info = name.get()
@@ -254,13 +256,13 @@ def change_name_window():
     change_name_button.pack(pady=10)
 
 
-def wikipedia_screen(text):
+def wikipedia_screen(results):
     wikipedia_screen = Toplevel(screen)  # te widżety działają jak okna, które są bezpośrednio zarządzane przez menedżera okien
-    wikipedia_screen.geometry("400x400")  # rozmiar okna
+    wikipedia_screen.geometry("250x250")  # rozmiar okna
     wikipedia_screen.title("Wikipedia")  # tytuł
     wikipedia_screen.iconbitmap('ludzik.ico')  # ustawienie ikony
 
-    message = Message(wikipedia_screen, text=text)  # tekst - stosujemy aby wyświetlić jeden lub więcej wierszy tekstu w widżecie
+    message = Message(wikipedia_screen, text=results)  # tekst - stosujemy aby wyświetlić jeden lub więcej wierszy tekstu w widżecie
     message.pack()
 
   # pack() służy do wypełniania widżetu w całej ramce
@@ -275,7 +277,7 @@ def main_screen():
     name_label = Label(text=name_assistant, width=300, bg="violet", fg="white", font=("Calibri", 13))
     name_label.pack()
 
-    microphone_photo = PhotoImage(file="mikro.png")  # logo mikrofonu
+    microphone_photo = PhotoImage(file="mikro.png")  # logo mikrofonu z inkscape
     microphone_button = Button(image=microphone_photo, command=process_audio)
     microphone_button.pack(pady=10)
 
